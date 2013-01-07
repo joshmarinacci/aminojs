@@ -1,0 +1,79 @@
+<html><body>
+<pre id='overview'>
+ Amino: JavaScript Scenegraph
+
+Amino is a scenegraph for drawing 2D graphics in JavaScript with the
+HTML 5 Canvas API. By creating a tree of nodes, you can draw shapes, text, images special effects; complete with transforms and animation.
+Amino takes care of all rendering, animation, and event handling
+so you can build *rich* interactive graphics with very little code.
+Using Amino is much more convenient than writing canvas code by hand.
+
+Here's a quick example:    
+
+    &lt;canvas id="can" width="200" height="200"&gt;&lt;/canvas&gt;
+    &lt;script&gt;
+    
+    //attach a runner to the canvas
+    var can = document.getElementById("can");
+    var runner = new Runner().setCanvas(can);
+    
+    //create a rect and a circle
+    var r = new Rect().set(0,0,50,50).setFill("green");
+    var c = new Circle().set(100,100,30).setFill("blue");
+    
+    //add the shapes to a group
+    var g = new Group().add(r).add(c);
+    
+    //make the rectangle go left and right every 5 seconds
+    var anim = new Anim(g,"x",0,150,5);
+    runner.addAnim(anim);
+    
+    //set the group as the root of the scenegraph, then start
+    runner.root = g;
+    runner.start();
+    
+    &lt;/script&gt;
+
+A note on properties. Most objects have properties like `x` or `width`.
+Properties are accessed with getters.  For example, to access the `width`
+property on a rectangle, call `rect.getWidth()`. Properties are set 
+with setters. For example, to set the `width` property
+on a rectangle, call `rect.setWidth(100)`. Most functions, especially 
+property setters, are chainable. This means you
+can set a bunch of properties at once like this:
+
+    var c = new Rect()
+        .setX(50)
+        .setY(50)
+        .setWidth(100)
+        .setHeight(200)
+        .setFill("green")
+        .setStrokeWidth(5)
+        .setStroke("black")
+        ;
+    
+
+</pre>
+<h1>Amino</h1>
+<div class='description'>
+ The engine that drives the whole system. 
+You generally only need one of these per page.
+
+</div>
+<h3>functions</h3>
+<ul>
+<b>add</b>
+Adds a node to this canvas.
+</ul>
+<h1>Canvas</h1>
+<div class='description'>
+ represents a drawable area on the screen, usually
+a canvas tag.
+
+</div>
+<h3>functions</h3>
+<ul>
+<b>add</b>
+Adds a node to this canvas.
+</ul>
+</body></html>

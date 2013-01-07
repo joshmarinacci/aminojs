@@ -1,0 +1,176 @@
+/*
+light to dark
+white
+EEE6AB
+C5BC8E
+696758
+45484B
+36393B
+dark gray: #555
+black
+
+offwhite: #eee
+*/
+
+body {
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+    margin-left: 14em;
+    border: 0px solid black;
+}
+
+
+h3 {
+	font-variant: small-caps;
+}
+
+ul li {
+	padding-left: 0px;
+	padding-bottom: 0.5em;
+	padding-right: 0px;
+	padding-top: 0.5em;
+	margin: 0px;
+	list-style-type: none;
+}
+
+ul {
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 3em;
+}
+
+
+
+a {
+    text-decoration: none;
+}
+
+
+
+/* navigation sidebar */
+#nav {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 14em;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    line-height: 130%;
+    padding-left: 0.5em;
+    padding-top: 1em;
+    font-size: 90%;
+    overflow: auto;
+}
+
+#nav a {
+	text-decoration: none;
+	color: black;
+}
+
+#nav a:hover {
+	text-decoration: underline;
+}
+
+
+
+body {
+	max-width: 40em;
+	background-color: #36393B;
+	background-image: url(resources/dark_gray_texture.png);
+	color: #eee;
+}
+p {
+	line-height: 140%;
+}
+#nav {
+    background-color: #45484B;
+	background-image: url(resources/med_gray_texture.png);
+    color: #EEE6AB;
+    border: 1px solid black;
+    border-width: 0 1px 0 0;
+}
+#nav li {
+    border-width: 0;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+	margin-top: 1em;
+}
+
+
+#nav li p {
+	margin: 0px;
+	padding: 0px;
+	color: white;
+}
+
+#nav ul {
+    margin: 0 0 0 1em;
+}
+
+#nav li li {
+    margin-top: 0 ;
+}
+
+
+#nav a {
+    color: #EEE6AB;
+}
+
+.class {
+    padding: 1rem;
+}
+
+
+h1, h2 {
+    color: white;
+    font-weight: normal;
+    font-size: 300%;
+    text-shadow: 0px 1px 2px #000;
+}
+
+h3 {
+    color: #C5BC8E;
+}
+
+#content ul li {
+    border: 1px solid #555;
+    border-radius: 10px;
+    margin: 1em;
+    padding: 1em;
+}
+
+pre {
+    padding: 1em;
+    margin: 1em;
+    border-radius: 10px;
+}
+
+
+li span {
+	display: block;
+	margin-bottom: 0.5em;
+	font-weight: normal;
+}
+li span b, li span i {
+	font-weight: normal;
+}
+
+
+/* ==== colors ==== */
+
+pre {
+    background-color: #EEE6AB;
+    color: black;
+}
+
+#content li {
+    background-color: #45484B;
+    color: #eee;
+}
+
+#content li span {
+	color: #EEE6AB;
+}
