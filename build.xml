@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<project default="help">
+
+<target name='help'>
+<echo>
+ant help        this message
+ant build-js    build dist/amino.js
+</echo>
+</target>
+
+<target name="init">
+    <property name="tests.dir" value="samples/js"/>
+    <property name="version" value="unknownversion"/>
+    <property name="amino.path" value="dist/amino-${version}.js"/>
+    
+    <echo message="basedir = ${basedir}"/>
+    <buildnumber/>
+    <tstamp>
+        <format property="TIMESTAMP" pattern="yyyy-MM-dd_kk-mm"/>
+    </tstamp>
+    <echo message="timestamp = ${TIMESTAMP}"/>
+
+    <property  name="publish.dir" value="blah"/>
+    <echo message="publish dir = ${publish.dir}"/>
+    <echo message="build.number = ${build.number}"/>
+    <mkdir dir="dist"/>
+</target>
+
+<target name="build-js" depends="init">
+    <concat destfile="dist/amino.js">
+        <fileset dir="src/">
+            <include name="amino*.js"/>
+        </fileset>
+    </concat>
+    <copy file="dist/amino.js" tofile="dist/amino-${version}-b${build.number}.js"/>
+    
+    <copy todir="dist">
+        <fileset dir="src/">
+            <exclude name="amino*.js"/>
+        </fileset>
+    </copy>
+</target>
+
+
+<target name="doc-js">
+    <mkdir dir="dist/doc"/>
+<!--    <exec command="node tools/joshdoc.js"/>-->
+    <exec command="node tools/joshdoc.js" output="dist/doc/doc.html"/>
+    <copy todir="dist/doc" file="tools/style.css"/>
+    <copy todir="dist/doc">
+        <fileset dir='tools'>
+            <include name="resources/*"/>
+        </fileset>
+    </copy>
+</target>
+
+<target name="tests-js">
+    <mkdir dir='dist/tests'/>
+    <copy todir='dist/tests'>
+        <fileset dir='tests'>
+        </fileset>
+    </copy>
+</target>
+
+<target name="clean">
+    <delete dir="dist"/>
+</target>
+
+<target name="publish" depends="init, build-js, doc-js, tests-js">
+    <copy todir="${publish.dir}">
+        <fileset dir="dist/">
+        </fileset>
+    </copy>
+        <echo file="${publish.dir}/index.html"><![CDATA[
+            <html>
+                <head>
+                    <title>Amino Build ${build.number} ${TIMESTAMP}</title>
+                    <link rel="stylesheet" type="text/css" href="index.css"></link>
+                </head>
+                <body>
+                    <h1>Amino Build</h1>
+                    <h2>Build number: ${build.number}</h2>
+                    <h2>Build date: ${TIMESTAMP}</h2>
+                    <h3>Builds</h3>
+                    
+                    <ul>
+                        <li><a href="amino.js">amino.js</a></li>
+                        <li><a href="Three.js">copy of Three.js</a></li>
+                        <li><a href="doc/doc.html">API Docs</a></li>
+                        <li><a href="tests/index.html">Tests</a></li>
+                    </ul>
+
+                </body>
+                <script type="text/javascript">
+            
+                  var _gaq = _gaq || [];
+                  _gaq.push(['_setAccount', 'UA-17798312-6']);
+                  _gaq.push(['_trackPageview']);
+            
+                  (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                  })();
+            
+                </script>
+            </html>
+            ]]>
+        </echo>
+</target>
+
+
+</project>
