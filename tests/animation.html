@@ -1,0 +1,347 @@
+<html>
+<!-- this is a comment -->
+<head>
+<meta name="viewport" content = "width = device-width; initial-scale=1; maximum-scale=1; user-scalable=no;" />
+<style type='text/css'>
+	canvas { border: 1px solid black; }
+</style>
+<script type="text/javascript" src="../amino.js"></script>
+<link href="common.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<ul><li><a href="basic.html">Prev</a></li><li><a href="three.html">Next</a></li></ul>
+
+<h1>Animation Tests</h1>
+
+<h3>click to start animation, on demand repaint</h3>
+<canvas id="test6a" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = false;
+		var can = engine.addCanvas("test6a");
+		var rect = new Rect().set(30,30,50,50).setFill("purple");
+		var anim = new PropAnim(rect,"x",30,130,1.5);
+		engine.addAnim(anim);
+		can.onClick(rect,function(e) {
+			anim.toggle();
+		});
+		can.add(rect);
+		engine.start();
+	})();
+</script>
+
+<h3>click to start animation, auto repaint</h3>
+<canvas id="test6b" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test6b");
+		var rect = new Rect().set(30,30,50,50).setFill("purple");
+		var anim = new PropAnim(rect,"x",30,130,1.5);
+		engine.addAnim(anim);
+		can.onClick(rect,function(e) {
+			anim.toggle();
+		});
+		can.add(rect);
+		engine.start();
+	})();
+</script>
+
+
+
+<h3>div animation</h3>
+<canvas id="test7" width="200" height="100"></canvas>
+<div id="testdiv7" style="position:absolute; border: 1px solid black; left:0px; ">test div 7</div>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test7");
+		var anim = new PropAnim(document.getElementById("testdiv7"),"left",0,200,5);
+		engine.addAnim(anim);
+		var rect = new Rect().set(30,30,50,50).setFill("purple");
+		can.add(rect);
+		can.onClick(rect,function(e) {
+			anim.toggle();
+		});
+		engine.start();
+	})();
+</script>
+
+
+
+<h3>custom animation using callbacks</h3>
+<canvas id="test8" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test8");
+		
+		var rect = new Rect().set(30,30,50,50).setFill("purple");
+		can.add(rect);
+		
+		var anim = new CallbackAnim()
+		anim.callback = function(time,starttime) {
+		    var x = rect.getX() + 1.2;
+		    if(x > 100) x = 0;
+		    rect.setX(x);    
+		}
+		engine.addAnim(anim);
+		engine.start();
+	})();
+</script>
+
+
+<h3>Animation with 'ooBefore' and 'onAfter'. Sets fill to green before animating, to blue after.</h3>
+<canvas id="test9" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test9");
+		
+		var rect = new Rect().set(0,30,50,50).setFill("purple");
+		can.add(rect);
+		can.onClick(rect,function() {
+		        anim.start();
+		});
+		var anim = new PropAnim(rect,"x",0,100,2)
+            .onBefore(function() {
+                rect.setFill("green");
+            })
+            .onAfter(function() {
+                rect.setFill("blue");
+            })
+		;
+		engine.addAnim(anim);
+		engine.start();
+	})();
+</script>
+
+
+<h3>Simple prop anim with loop forever</h3>
+<pre>new PropAnim(rect,"x",0,200).setLoop(-1);</pre>
+<canvas id="test10" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test10");
+    var rect = new Rect()
+        .set(0,30,50,50)
+        .setFill("purple");
+    can.add(rect);
+    var anim = new PropAnim(rect,"x",0,100,2)
+        .setLoop(-1);
+    can.onClick(rect,function() {
+        anim.start();
+    });
+    engine.addAnim(anim);
+    engine.start();
+})();
+</script>
+
+
+<h3>Simple prop anim with loop 3 times</h3>
+<pre>new PropAnim(rect,"x",0,200).setLoop(3);</pre>
+<canvas id="test11" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test11");
+    var rect = new Rect().set(0,30,50,50).setFill("purple");
+    can.add(rect);
+    var anim = new PropAnim(rect,"x",0,100,2).setLoop(3);
+    can.onClick(rect,function() {
+        anim.start();
+    });
+    engine.addAnim(anim);
+    engine.start();
+})();
+</script>
+
+
+<h3>Simple prop anim with loop forever and auto reverse</h3>
+<pre>new PropAnim(rect,"x",0,200).setLoop(-1).setAutoReverse(true);</pre>
+<canvas id="test12" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test12");
+    var rect = new Rect().set(0,30,50,50).setFill("purple");
+    can.add(rect);
+    var anim = new PropAnim(rect,"x",0,100,2)
+        .setLoop(-1)
+        .setAutoReverse(true);
+    can.onClick(rect,function() {
+        anim.start();
+    });
+    engine.addAnim(anim);
+    engine.start();
+})();
+</script>
+
+
+
+<h3>Simple prop anim with loop 3 times and auto reverse</h3>
+<pre>new PropAnim(rect,"x",0,200).setLoop(3).setAutoReverse(true);</pre>
+<canvas id="test13" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test13");
+    var rect = new Rect().set(0,30,50,50).setFill("purple");
+    can.add(rect);
+    var anim = new PropAnim(rect,"x",0,100,2)
+        .setLoop(3)
+        .setAutoReverse(true);
+    can.onClick(rect,function() {
+        anim.start();
+    });
+    engine.addAnim(anim);
+    engine.start();
+})();
+</script>
+
+
+
+<h3>Serially chained anim. </h3>
+<pre>var a1 = new PropAnim(rect,"x",0,200,1);
+var a2 = new PropAnim(rect,"y",0,100,1);
+var sa = new SerialAnim().add(a1).add(a2).start();</pre>
+<canvas id="test14" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test14");
+    var rect = new Rect()
+        .set(0,0,50,50)
+        .setFill("purple");
+    can.add(rect);
+    
+    var a1 = new PropAnim(rect,"x",0,50,1);
+    var a2 = new PropAnim(rect,"y",0,50,1);
+    var sa = new SerialAnim().add(a1).add(a2);
+    
+    can.onClick(rect,function() {
+        sa.start();
+    });
+    engine.addAnim(sa);
+    engine.start();
+})();
+</script>
+
+
+
+<h3>Parallel Chained Anim</h3>
+<pre>var a1 = new PropAnim(rect,"x",0,200,1);
+var a2 = new PropAnim(rect,"y",0,100,1);
+var pa = new ParallelAnim().add(a1).add(a2).start();</pre>
+<canvas id="test15" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test15");
+    var rect = new Rect().set(0,0,50,50).setFill("purple");
+    can.add(rect);
+    var a1 = new PropAnim(rect,"x",0,50,1);
+    var a2 = new PropAnim(rect,"y",0,50,1);
+    var pa = new ParallelAnim().add(a1).add(a2);
+    can.onClick(rect,function() {
+        pa.start();
+    });
+    engine.addAnim(pa);
+    engine.start();
+})();
+</script>
+
+<!--
+
+
+<h3>Animate color</h3>
+<pre>new PropAnim(rect,"fill",0xFF0000,0x00FF00,3).setType("color").start();</pre>
+<canvas id="test16" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test16");
+    var rect = new Rect().set(0,30,50,50).setFill("purple");
+    can.add(rect);
+    var anim = new PropAnim(rect,"fill",0xFF0000,0x00FF00,3)
+        .setType("color");
+    can.onClick(rect,function() {
+        anim.start();
+    });
+    engine.addAnim(anim);
+    engine.start();
+})();
+</script>
+
+
+
+
+<h3>Animate using CSS transitions</h3>
+<div id="testdiv8" style="position:absolute; border: 1px solid black; left:0px; ">test div 8</div>
+
+<pre>var a1 = new PropAnim("#testdiv8","left",0,200,5).setUseCSS(true);
+var a1 = new PropAnim(document.getElementById("testdiv8"),"left",0,200,5).setUseCSS(true);</pre>
+<canvas id="test17" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+    var engine = new Amino();
+    engine.autoPaint = true;
+    var can = engine.addCanvas("test17");
+    var rect = new Rect().set(0,30,50,50).setFill("purple");
+    can.add(rect);
+    var a1 = new PropAnim("#testdiv8","left",0,200,5)
+        .setUseCSS(true);
+//    var a1 = new PropAnim(document.getElementById("testdiv8"),"left",0,200,5)
+//        .setUseCSS(true);
+    can.onClick(rect,function() {
+        anim.start();
+    });
+    engine.addAnim(anim);
+    engine.start();
+})();
+</script>
+
+-->
+
+<h3>click once to start, and once to remove running animation</h3>
+<canvas id="test20" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = false;
+		var can = engine.addCanvas("test20");
+		var rect = new Rect().set(30,30,50,50).setFill("purple");
+		var anim = new PropAnim(rect,"x",30,130,1.5);
+		engine.addAnim(anim);
+		var anim2 = new PropAnim(rect,"x",30,130,1.5);
+		engine.addAnim(anim2);
+		var anim3 = new PropAnim(rect,"x",30,130,1.5);
+		engine.addAnim(anim3);
+		can.onClick(rect,function(e) {
+		        if(anim.playing) {
+		            engine.removeAnim(anim);
+		        } else {
+		            anim.start();
+		        }
+		});
+		can.add(rect);
+		engine.start();
+	})();
+</script>
+</body>
+</html>
+

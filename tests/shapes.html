@@ -1,0 +1,159 @@
+<html>
+<head>
+<meta name="viewport" content = "width = device-width; initial-scale=1; maximum-scale=1; user-scalable=no;" />
+
+<script type="text/javascript" src="../amino.js"></script>
+<link href="common.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<ul><li><a href="events.html">Prev</a></li><li><a href="transforms.html">Next</a></li></ul>
+
+<h3>Shape Tests</h3>
+
+<h3>basic shapes with flat fills</h3>
+<canvas id="test1" width="300" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = false;
+		var canvas = engine.addCanvas("test1");
+		var rect = new Rect().set(25,25,50,50).setFill("blue");
+		canvas.add(rect);
+		var circle = new Circle().set(110,50,25).setFill("red");
+		canvas.add(circle);
+		
+		var path = new Path()
+		    .moveTo(140,10)
+		    .lineTo(190,30)
+		    .lineTo(160,60)
+		    .closeTo(10,10)
+		    .build();
+		var pathNode = new PathNode()
+		    .setPath(path)
+		    .setFill("green");
+		canvas.add(pathNode);
+		
+		var ellipse = new Ellipse()
+		    .set(220,20,30,60)
+		    .setFill("purple");
+		canvas.add(ellipse);
+		
+		engine.start();
+	})();
+</script>
+
+
+<h3>basic text with flat fills</h3>
+<canvas id="test2" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = false;
+		var canvas = engine.addCanvas("test2");
+		canvas.add(new Text()
+        		    .set("Greetings Earthling!",5,30)
+        		    .setFill("black"));
+		canvas.add(new Text()
+        		    .set("Greetings Earthling!",5,50)
+        		    .setFill("red"));
+		canvas.add(new Text()
+        		    .set("Greetings Earthling!",5,70)
+        		    .setFill("green"));
+		canvas.add(new Text()
+        		    .set("Greetings Earthling!",5,90)
+        		    .setFill("blue"));
+		engine.start();
+	})();
+</script>
+
+
+
+<h3>simple image</h3>
+<canvas id="test3" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = false;
+		var canvas = engine.addCanvas("test3");
+		canvas.add(new ImageView("venus.jpg"));
+		engine.start();
+	})();
+</script>
+
+<h3>shapes with linear gradient fill</h3>
+<canvas id="test4" width="300" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = false;
+		var grad = new LinearGradientFill(0,0,0,100)
+		    .addStop(0,"red")
+		    .addStop(0.5,"green")
+		    .addStop(1.0,"blue");
+		var canvas = engine.addCanvas("test4");
+		var rect = new Rect().set(25,25,50,50).setFill(grad);
+		canvas.add(rect);
+		var circle = new Circle().set(110,50,25).setFill(grad);
+		canvas.add(circle);
+		
+		var path = new Path()
+		    .moveTo(140,10)
+		    .lineTo(190,30)
+		    .lineTo(160,60)
+		    .closeTo(10,10)
+		    .build();
+		var pathNode = new PathNode()
+		    .setPath(path)
+		    .setFill(grad);
+		canvas.add(pathNode);
+		
+		var ellipse = new Ellipse()
+		    .set(220,20,30,60)
+		    .setFill(grad);
+		canvas.add(ellipse);
+		
+		engine.start();
+	})();
+</script>
+
+<h3>shapes with image pattern fill</h3>
+<canvas id="test5" width="300" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = false;
+		var patt = new PatternFill("venus.jpg","repeat");
+		var canvas = engine.addCanvas("test5");
+		var rect = new Rect().set(25,25,50,50).setFill(patt);
+		canvas.add(rect);
+		var circle = new Circle().set(110,50,25).setFill(patt);
+		canvas.add(circle);
+		
+		var path = new Path()
+		    .moveTo(140,10)
+		    .lineTo(190,30)
+		    .lineTo(160,60)
+		    .closeTo(10,10)
+		    .build();
+		var pathNode = new PathNode()
+		    .setPath(path)
+		    .setFill(patt);
+		canvas.add(pathNode);
+		
+		var ellipse = new Ellipse()
+		    .set(220,20,30,60)
+		    .setFill(patt);
+		canvas.add(ellipse);
+		
+		var anim = new PropAnim(rect,"x",30,130,1.5);
+		engine.addAnim(anim);
+		canvas.onClick(rect,function(e) {
+		    anim.toggle();
+		});
+		engine.start();
+	})();
+</script>
+
+</body>
+</html>

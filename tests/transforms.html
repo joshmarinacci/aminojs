@@ -1,0 +1,177 @@
+<html>
+<head>
+<meta name="viewport" content = "width = device-width; initial-scale=1; maximum-scale=1; user-scalable=no;" />
+<title>Amino Repaint Tests</title>
+<script type="text/javascript" src="../amino.js"></script>
+<link href="common.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<ul><li><a href="shapes.html">Prev</a></li><li><a href="control.html">Next</a></li></ul>
+
+<h1>Groups</h1>
+<h3>Two shapes in a group, translated</h3>
+<canvas id="testa" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		var can = engine.addCanvas("testa");
+		var rect1 = new Rect().set(0,0,50,50).setFill("red");
+		var rect2 = new Rect().set(100,0,50,50).setFill("blue");
+		var group = new Group().add(rect1).add(rect2);
+		group.setX(30);
+		can.add(group);
+        //can.add(rect);
+		engine.start();
+	})();
+</script>
+
+<h3>Two shapes in a group, inside a rotated transform</h3>
+<canvas id="testb" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		var can = engine.addCanvas("testb");
+		var rect1 = new Rect().set(0,0,50,50).setFill("red");
+		var rect2 = new Rect().set(100,0,50,50).setFill("blue");
+		var group = new Group().add(rect1).add(rect2);
+		var trans = new Transform(group)
+		    .setRotate(30);
+		can.add(trans);
+        //can.add(rect);
+		engine.start();
+	})();
+</script>
+
+
+
+<h1>Transforms</h1>
+
+<h3>rotating transform</h3>
+<canvas id="test1" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test1");
+		var rect = new Rect().set(0,0,50,50).setFill("red");
+		var trans = new Transform(rect)
+			.setTranslateX(25)
+			.setTranslateY(25)
+			.setAnchorX(25)
+			.setAnchorY(25)
+			.setRotate(30);
+		var anim = new PropAnim(trans,"rotate",0,360,3);
+		engine.addAnim(anim);
+		anim.toggle();
+		can.add(trans);
+        //can.add(rect);
+		engine.start();
+	})();
+</script>
+
+
+<h1>Events</h1>
+
+<h3>Events inside Group</h3>
+<p>First rect is inside a group. Second rect is inside a translated group.
+The last rect is not in a group. All should toggle when you
+click them.</p>
+<canvas id="test3" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test3");
+		
+		var g1 = new Group();
+		var r1 = new Rect().set(0,20,50,50).setFill("red");
+		g1.add(r1);
+        can.add(g1);
+        can.onPress(r1,function(e) {
+            if(r1.getFill() == "red") {
+                r1.setFill("black");
+            } else {
+                r1.setFill("red");
+            }
+        });
+
+        
+        var g2 = new Group().setX(60);
+		var r2 = new Rect().set(0,20,50,50).setFill("red");
+        g2.add(r2);
+        can.add(g2);
+        can.onPress(r2,function(e) {
+            if(r2.getFill() == "red") {
+                r2.setFill("black");
+            } else {
+                r2.setFill("red");
+            }
+        });
+
+		
+		var r3 = new Rect().set(140,20,50,50).setFill("red");
+        can.add(r3);
+        can.onPress(r3,function(e) {
+            if(r3.getFill() == "red") {
+                r3.setFill("black");
+            } else {
+                r3.setFill("red");
+            }
+        });
+		engine.start();
+	})();
+</script>
+
+
+<h3>Events inside a Transform</h3>
+<p>First rect is inside a transform. Second rect is inside a translated transform.
+The last rect is not in a transform. All should toggle when you
+click them.</p>
+<canvas id="test4" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test4");
+		
+		var r1 = new Rect().set(0,20,50,50).setFill("red");
+		var g1 = new Transform(r1);
+        can.add(g1);
+        can.onPress(r1,function(e) {
+            if(r1.getFill() == "red") {
+                r1.setFill("black");
+            } else {
+                r1.setFill("red");
+            }
+        });
+
+        
+		var r2 = new Rect().set(0,20,50,50).setFill("red");
+        var g2 = new Transform(r2).setTranslateX(60);
+        can.add(g2);
+        can.onPress(r2,function(e) {
+            if(r2.getFill() == "red") {
+                r2.setFill("black");
+            } else {
+                r2.setFill("red");
+            }
+        });
+
+		
+		var r3 = new Rect().set(140,20,50,50).setFill("red");
+        can.add(r3);
+        can.onPress(r3,function(e) {
+            if(r3.getFill() == "red") {
+                r3.setFill("black");
+            } else {
+                r3.setFill("red");
+            }
+        });
+		engine.start();
+	})();
+</script>
+
+
+</body>
+</html>

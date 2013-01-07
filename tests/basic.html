@@ -1,0 +1,112 @@
+<html>
+<head>
+<meta name="viewport" content = "width = device-width; initial-scale=1; maximum-scale=1; user-scalable=no;" />
+<script type="text/javascript" src="../amino.js"></script>
+<link href="common.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<ul><li><a href="#">Prev</a></li><li><a href="animation.html">Next</a></li></ul>
+
+<h1>Basic repaint tests</h1>
+
+<h3>blank canvas</h3>
+<canvas id="test1" width="200" height="100"></canvas>
+<script type="text/javascript">
+	var engine = new Amino();
+	engine.addCanvas("test1");
+	engine.start();
+</script>
+
+
+<h3>red rect</h3>
+<canvas id="test2" width="200" height="100"></canvas>
+<script type="text/javascript">
+	var engine = new Amino();
+	var can = engine.addCanvas("test2");
+	can.add(new Rect().set(0,0,50,50).setFill("red"));
+	engine.start();
+</script>
+
+
+<h3>blue text</h3>
+<canvas id="test3" width="200" height="100"></canvas>
+<script type="text/javascript">
+	var engine = new Amino();
+	var can = engine.addCanvas("test3");
+	can.add(new Text().set("some text",30,30).setFill("blue"));
+	engine.start();
+</script>
+
+
+<h3>multiple canvii</h3>
+<canvas id="test4a" width="200" height="100"></canvas>
+<canvas id="test4b" width="200" height="100"></canvas>
+<script type="text/javascript">
+	var engine = new Amino();
+	var cana = engine.addCanvas("test4a");
+	cana.add(new Text().set("text in canvas a",30,30).setFill("blue"));
+	var canb = engine.addCanvas("test4b");
+	canb.add(new Text().set("text in canvas b",30,30).setFill("black"));
+	engine.start();
+</script>
+
+
+<h1>Repainting</h1>
+
+<h3>click to toggle color, on demand repaint</h3>
+<canvas id="test5a" width="200" height="100"></canvas>
+<script type="text/javascript">
+	var engine = new Amino();
+	var can = engine.addCanvas("test5a");
+	var recta = new Rect().set(30,30,50,50).setFill("green");
+	can.onClick(recta,function(e) {
+		if(recta.getFill() == "red") {
+			recta.setFill("blue");
+		} else {
+			recta.setFill("red");
+		}
+	});
+	can.add(recta);
+	engine.start();
+</script>
+
+<h3>click to toggle color, auto repaint</h3>
+<canvas id="test5b" width="200" height="100"></canvas>
+<script type="text/javascript">
+	var engine = new Amino();
+	engine.autoPaint = true;
+	var can = engine.addCanvas("test5b");
+	var rectb = new Rect().set(30,30,50,50).setFill("green");
+	can.onClick(rectb,function(e) {
+		if(rectb.getFill() == "red") {
+			rectb.setFill("blue");
+		} else {
+			rectb.setFill("red");
+		}
+	});
+	can.add(rectb);
+	engine.start();
+</script>
+
+
+<h1>IDs</h1>
+
+<h3>Sets fill of red rect to blue. Finds it by searching for the id.</h3>
+
+<canvas id="test6" width="200" height="100"></canvas>
+<script type="text/javascript">
+(function() {
+	var engine = new Amino();
+	engine.autoPaint = true;
+	var can = engine.addCanvas("test6");
+	var rect = new Rect().set(0,0,50,50).setFill("red").setId("rect");
+	can.add(rect);
+	can.findById("rect").setFill("blue");
+	engine.start();
+})();
+</script>
+
+</body>
+</html>
+

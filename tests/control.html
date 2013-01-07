@@ -1,0 +1,135 @@
+<html>
+<head>
+<meta name="viewport" content = "width = device-width; initial-scale=1; maximum-scale=1; user-scalable=no;" />
+<title>Amino Repaint Tests</title>
+<script type="text/javascript" src="../amino.js"></script>
+<link href="common.css" type="text/css" rel="stylesheet"/>
+<style type="text/css">
+canvas {
+    border:1px solid black;
+}
+body {
+    background-color: gray;
+}
+</style>
+</head>
+<body>
+
+<ul><li><a href="transforms.html">Prev</a></li><li><a href="#">Next</a></li></ul>
+
+<h3>Default Background (should be white)</h3>
+<canvas id="test1" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		var can = engine.addCanvas("test1");
+		engine.start();
+	})();
+</script>
+
+<h3>Blue Background</h3>
+<canvas id="test2" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		var can = engine.addCanvas("test2");
+		can.setBackground("blue");
+		engine.start();
+	})();
+</script>
+
+<h3>Transparent Background (show should gray page bg through)</h3>
+<canvas id="test3" width="200" height="100"></canvas>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		var can = engine.addCanvas("test3");
+		can.add(new Rect().set(10,10,40,40).setFill("red"));
+		can.setTransparent(true);
+		engine.start();
+	})();
+</script>
+
+
+<h3>Adjust canvas properly when resizing</h3>
+<canvas id="test4" width="200" height="200" style='border:1px solid red;' ></canvas>
+<style type='text/css'>
+#test4 { width: 50% }
+</style>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test4");
+		can.add(new Rect()
+		    .set(10,10,40,40)
+		    .setFill("white")
+		    .setStroke("black")
+		    .setStrokeWidth(1)
+		    );
+		can.add(new Circle()
+		    .set(100,50,20)
+		    .setFill("white")
+		    .setStroke("black")
+		    .setStrokeWidth(1));
+		engine.start();
+	})();
+</script>
+
+<h3>don't scale canvas when resizing</h3>
+<canvas id="test5" width="200" height="200" style='border:1px solid red;' ></canvas>
+<style type='text/css'>
+#test5 { width: 50% }
+</style>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test5");
+		can.autoSize = false;
+		can.autoScale = false;
+		can.add(new Rect()
+		    .set(10,10,40,40)
+		    .setFill("white")
+		    .setStroke("black")
+		    .setStrokeWidth(1)
+		    );
+		can.add(new Circle()
+		    .set(100,50,20)
+		    .setFill("white")
+		    .setStroke("black")
+		    .setStrokeWidth(1));
+		engine.start();
+	})();
+</script>
+
+
+<h3>resize but don't auto scale canvas when resizing</h3>
+<canvas id="test6" width="200" height="200" style='border:1px solid red;' ></canvas>
+<style type='text/css'>
+#test6 { width: 50% }
+</style>
+<script type="text/javascript">
+	(function() {
+		var engine = new Amino();
+		engine.autoPaint = true;
+		var can = engine.addCanvas("test6");
+		can.autoSize = true;
+		can.autoScale = false;
+		can.add(new Rect()
+		    .set(10,10,40,40)
+		    .setFill("white")
+		    .setStroke("black")
+		    .setStrokeWidth(1)
+		    );
+		can.add(new Circle()
+		    .set(100,50,20)
+		    .setFill("white")
+		    .setStroke("black")
+		    .setStrokeWidth(1));
+		engine.start();
+	})();
+</script>
+
+</body>
+</html>

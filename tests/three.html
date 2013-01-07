@@ -1,0 +1,49 @@
+<html>
+<head>
+<meta name="viewport" content = "width = device-width; initial-scale=1; maximum-scale=1; user-scalable=no;" />
+
+<script type="text/javascript" src="../amino.js"></script>
+<script type="text/javascript" src="../Three.js"></script>
+<script type="text/javascript" src="../amino_three.js"></script>
+<script type="text/javascript" src="../Dragger.js"></script>
+<link href="common.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+<ul><li><a href="animation.html">Prev</a></li><li><a href="events.html">Next</a></li></ul>
+
+<h3>Simple Three.JS tests</h3>
+
+<div id="container" style="width:300px; height:300px;"></div>
+
+<script type="text/javascript">
+//create an amino engine
+var engine = new Amino();
+//engine.DEBUG = true;
+engine.autoPaint = false;
+
+//set up the scene
+var scene = engine.add3DCanvas("container");
+var parent = new Group3();
+parent.setPositionY(150);
+//parent.setRotateY(-60);
+//parent.add(new BeveledPath().setFill("#55ffcc"));
+//parent.add(new Block().set(300,100,100).setFill("#667788"));
+parent.add(new Sphere().set(200,40).setFill("#00ff00"));
+scene.add(parent);
+scene.add(new Light3());
+
+//add a dragger
+var dragger = new Dragger();
+dragger.onDrag = function(e) { parent.setRotateY(e.totalX/60); }
+dragger.register(null,null,scene.domElement);
+
+var anim = new PropAnim(parent,"rotateY",0,Math.PI,30);
+engine.addAnim(anim);
+//anim.toggle();
+//start it
+engine.start();
+</script>
+
+</body>
+</html>
