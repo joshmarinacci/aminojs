@@ -394,8 +394,20 @@ Canvas.prototype.setTransparent = function(transparent) {
 //@function add(node) Adds a node to this canvas.
 Canvas.prototype.add = function(node) {
 	this.nodes.push(node);
-	node.parent = this;
+	node.setParent(this);
+	return this;
 }
+
+//@function remove(node) Remove the child `n` from this group.
+Canvas.prototype.remove = function(n) {
+    var i = this.nodes.indexOf(n);
+    if(i >= 0) {
+        this.nodes.splice(i,1);
+        n.setParent(null);
+    }
+    this.setDirty();
+    return this;
+};
 
 //@function on(type,node,fn)  adds an event handler of the specified type. ex: canvas.on('click',rect,function(){});
 Canvas.prototype.on = function(eventtype, node, fn) {
@@ -536,6 +548,7 @@ function AminoShape() {
 	}
 	
 	this.paint = function(ctx) {
+        if(!self.isVisible()) return;
         if(self.fill.generate) {
             ctx.fillStyle = self.fill.generate(ctx);
         } else {
@@ -998,6 +1011,11 @@ SerialAnim.prototype.add = function(anim) {
     this.anims.push(anim);
     return this;
 }
+//@function onAfter(callback)  sets a function to be called when the animation finishes
+SerialAnim.prototype.onAfter = function(afterCallback) {
+    this.afterCallback = afterCallback;
+    return this;
+}
 //@function start() starts the animation
 SerialAnim.prototype.start = function() {
 	this.playing = true;
@@ -1019,8 +1037,10 @@ SerialAnim.prototype.update = function() {
 	if(!anim.playing) {
 	    this.animIndex++;
 	    if(this.animIndex >= this.anims.length) {
-	        console.log('serial anim done');
 	        this.playing = false;
+            if(this.afterCallback) {
+                this.afterCallback();
+            }
 	    } else {
 	        this.anims[this.animIndex].start();
 	    }
