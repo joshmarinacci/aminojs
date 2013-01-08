@@ -644,7 +644,7 @@ function ImageView(url) {
             self.width = self.img.width;
             self.height = self.img.height;
         }
-        this.img.src = url;
+        if(url) this.img.src = url;
     }
     
     //@property x  The Y coordinate of the upper left corner of the image.
@@ -663,6 +663,16 @@ function ImageView(url) {
         this.scale = scale;
         return this;
     };
+
+    //@property src  The Y coordinate of the upper left corner of the image.
+    this.src = 0.0;
+    this.setSrc = function(src) {  
+        this.src = src;  
+        this.img.src = src;
+        this.setDirty();  
+        return this;  
+    };
+    this.getSrc = function() { return this.src; };
 
     this.paint = function(ctx) {
         //self.loaded = false;
