@@ -135,7 +135,7 @@ click them.</p>
 		engine.autoPaint = true;
 		var can = engine.addCanvas("test4");
 		
-		var r1 = new Rect().set(0,20,50,50).setFill("red");
+		var r1 = new Rect().set(0,0,50,50).setFill("red");
 		var g1 = new Transform(r1);
         can.add(g1);
         can.onPress(r1,function(e) {
@@ -146,7 +146,6 @@ click them.</p>
             }
         });
 
-        
 		var r2 = new Rect().set(0,20,50,50).setFill("red");
         var g2 = new Transform(r2).setTranslateX(60);
         can.add(g2);
@@ -157,7 +156,6 @@ click them.</p>
                 r2.setFill("red");
             }
         });
-
 		
 		var r3 = new Rect().set(140,20,50,50).setFill("red");
         can.add(r3);
@@ -168,7 +166,9 @@ click them.</p>
                 r3.setFill("red");
             }
         });
+                
 		engine.start();
+		
 	})();
 </script>
 

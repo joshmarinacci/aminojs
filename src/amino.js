@@ -312,7 +312,7 @@ function Canvas(engine,domCanvas) {
     			return node;
     		}
     		
-    		if(node instanceof Group && node.isVisible()) {
+    		if(node.isVisible() && node.hasChildren && node.hasChildren()) {
     		    var r = this.searchGroup(node,point);
     		    if(r) {
     		        return r;
@@ -323,13 +323,13 @@ function Canvas(engine,domCanvas) {
     }
     
     this.searchGroup = function(group,point) {
-        point = {x:point.x-group.getX(), y:point.y-group.getY() };
-        for(var j=group.children.length-1; j>=0; j--) {
-            var node = group.children[j];
+        point = group.convertToChildCoords(point);
+        for(var j=group.childCount()-1; j>=0; j--) {
+            var node = group.getChild(j);
             if(node && node.isVisible() && node.contains(point)) {
                 return node;
             }
-            if(node instanceof Group && node.isVisible()) {
+    		if(node.isVisible() && node.hasChildren && node.hasChildren()) {
     		    var r = this.searchGroup(node,point);
     		    if(r) return r;
             }
@@ -740,12 +740,21 @@ function Transform(n) {
     
     /* container stuff */
     this.contains = function(pt) {
-        return self.node.contains(
+        return false;
+        //return this.node.contains(this.convertToChildCoords(pt));
+        /*
             {
                 x:pt.x-self.translateX,
                 y:pt.y-self.translateY
-            });
+            });*/
     };
+    
+    this.convertToChildCoords = function(pt) {
+        return {
+            x:pt.x-this.getTranslateX(),
+            y:pt.y-this.getTranslateY()
+        };
+    }
     this.hasChildren = function() {
         return true;
     };
@@ -871,9 +880,6 @@ function Group() {
     this.hasChildren = function() {
         return true;
     };
-    this.convertToChildCoords = function(x,y) {
-        return [x-self.x,y-self.y];
-    };
     //@function childCount() Returns the number of child nodes in this group.
     this.childCount = function() {
         return self.children.length;
@@ -881,6 +887,14 @@ function Group() {
     //@function getChild(n) Returns the child node at index `n`.
     this.getChild = function(n) {
         return self.children[n];
+    };
+    
+    
+    this.convertToChildCoords = function(pt) {
+        return {
+            x:pt.x-self.x,
+            y:pt.y-self.y
+        };
     };
     
     return true;
