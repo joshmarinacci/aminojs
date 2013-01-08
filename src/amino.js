@@ -475,6 +475,28 @@ Canvas.prototype.getHeight = function() {
     return this.domCanvas.height;
 }
 
+//@function findById(str) Finds a node who's ID matches the string str. Returns null if no node is found.
+Canvas.prototype.findById = function(str) {
+    function findIt(r,s) {
+        if(r.getId) {
+            if(r.getId() == s) return r;
+        }
+        if(r.nodes) {
+            for(var i=0; i<r.nodes.length; i++) {
+                var n = findIt(r.nodes[i],s);
+                if(n != null) return n;
+            }
+        }
+        if(r.children) {
+            for(var i=0; i<r.children.length; i++) {
+                var n = findIt(r.children[i],s);
+                if(n != null) return n;
+            }
+        }
+    }
+    return findIt(this,str);
+}
+
 
 /*
 @class AminoNode the base class for all nodes

@@ -92,6 +92,7 @@
 
 <h1>IDs</h1>
 
+
 <h3>Sets fill of red rect to blue. Finds it by searching for the id.</h3>
 
 <canvas id="test6" width="200" height="100"></canvas>
@@ -103,6 +104,10 @@
 	var rect = new Rect().set(0,0,50,50).setFill("red").setId("rect");
 	can.add(rect);
 	can.findById("rect").setFill("blue");
+	
+	var r2 = new Rect().set(0,0,50,50).setFill("red").setId("r2");
+	can.add(new Group().add(r2).setX(100));
+	can.findById("r2").setFill("blue");
 	engine.start();
 })();
 </script>
