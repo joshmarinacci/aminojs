@@ -375,7 +375,8 @@ Canvas.prototype.repaint = function() {
 	
 	for(var i=0; i<this.nodes.length; i++) {
 		var node = this.nodes[i];
-		node.paint(ctx);
+		if(node && node.isVisible())
+		    node.paint(ctx);
 	}
 	ctx.restore();
 	this.dirty = false;
